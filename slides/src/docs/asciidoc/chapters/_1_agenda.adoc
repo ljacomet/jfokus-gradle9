@@ -1,0 +1,41 @@
+[background-color="#02303a"]
+== What are we talking about today?
+image::gradle/bg-8.png[background, size=cover]
+
+&#x1F4CB;
+
+=== A few build questions ...
+image::gradle/bg-10.png[background, size=cover]
+
+[%step]
+* Who has a long build?
+[%step]
+** 1 hour and more?
+** 30 minutes and more?
+** 5 minutes and more?
+** less than a minute?
+* Who has a complex build setup?
+* Who is happy to use a build tool?
+
+=== And which build tool?
+image::gradle/bg-10.png[background, size=cover]
+
+[%step]
+* Who uses Gradle?
+* Who uses Maven?
+* Who uses both?
+* Who uses neither?
+
+=== Agenda
+image::gradle/bg-10.png[background, size=cover]
+
+* Performance as a feature
+** Compiler daemons
+** Configuration cache
+** Isolated projects
+* Build comprehensibility
+** Solving evaluation ordering with laziness
+** Reusable DSL elements
+* A peek into the future
+
+

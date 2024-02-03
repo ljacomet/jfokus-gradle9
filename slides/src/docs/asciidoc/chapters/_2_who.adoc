@@ -1,0 +1,132 @@
+[background-color="#02303a"]
+== Who am I?
+image::gradle/bg-1.png[background, size=cover]
+
+&#x1F9D1;&#x200D;&#x1F4BB;
+
+[%notitle]
+=== Louis
+image::gradle/bg-1.png[background, size=cover]
+
+image::louis.png[height=250,width=250]
+
+[source,kotlin]
+----
+speaker {
+    name = "Louis Jacomet"
+    company = "Gradle"
+    joined = 2018
+    position = "Support Team Lead"
+    previously = "Dependency Management, JVM"
+    past = listOf(
+        "Terracotta / Ehcache" in 2013,
+        "Devoxx Belgium Program Committee" since 2012,
+        "Contractor" in 2002,
+        "Java 'Hello, World!'" in 1997
+    )
+    failures = generateSequence(code) { bugs }
+    twitter = "@ljacomet"
+    mastodon = "@ljacomet@foojay.social"
+    github = "ljacomet"
+    extra = "Not fully figured out how to stay out of management !?!"
+}
+----
+
+=== Gradle
+image::gradle/bg-1.png[background, size=cover]
+
+[cols="^.^1,^.^1,^.^1",frame=none,grid=none,role=who-gradle]
+|===
+a|image::logo-gradleware.svg[]
+a|image::logo-gradle-old.svg[]
+a|image::logo-gradle-elephant-old.png[]
+|===
+
+Since 2008, our mission is to improve developer productivity.
+
+[cols="^.^1,^.^1,^.^1",frame=none,grid=none,role=who-gradle]
+|===
+a|image::logo-gradle-elephant-geometrics.svg[]
+a|image::logo-gradle-elephant.svg[]
+a|image::logo-gradle-elephant-outline.svg[]
+|===
+
+
+[%notitle]
+=== Gradle Build Tool
+image::gradle/bg-1.png[background, size=cover]
+
+image::logo-gradle-build-tool.svg[role=product-logo-as-title]
+
+Software build tool under https://github.com/gradle/gradle/blob/master/LICENSE[Apache] license.
+
+Top 20 in popular open source projects according to https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/[TechCrunch] with nearly 30 millions monthly downloads.
+
+
+[%notitle]
+=== Develocity
+image::gradle/bg-1.png[background, size=cover]
+
+image::gradle-develocity.svg[role=product-logo-as-title]
+
+Develocity, commercial solution, is the first integrated platform for Developer Productivity Engineering (DPE)
+
+image::build-scan-topology.png[width=70%]
+
+[.notes]
+--
+metadata of all builds +
+outputs of all builds +
+observability: scans, performance trends, test dashboard ... +
+acceleration: build-cache, test distribution, predictive test selection ...
+--
+
+
+=== Developer Productivity Engineering
+image::gradle/bg-1.png[background, size=cover]
+
+Developer Productivity Engineering (DPE) is a software development practice used by leading software development organizations to maximize developer productivity and happiness.
+
+[cols="<.^1,^.^1",frame=none,grid=none]
+|===
+a|
+* Make builds and testing faster
+* Make solving issues more efficient
+
+a|image::dpe-showdown.jpeg[]
+
+[.small]
+https://twitter.com/DpeShowdown
+|===
+
+
+[.notes]
+--
+DevProdEng Showdown is a series of 30 minutes shows, broadcaster live where an expert panel discusses topics on developer productivity.
+
+Two formulas
+* showdown: game show, 4 participants
+* lowdown: interview
+
+Showcases how Netflix, Microsoft, LinkedIn and others do DPE
+--
+
+
+=== Build Scans
+image::gradle/bg-1.png[background, size=cover]
+
+Permanent record +
+of everything that happens in a build.
+
+image::buildscan-example.png[]
+
+image:build-scan-link.svg[link=https://scans.gradle.com/s/rcqiowuogd2xu]
+
+[.notes]
+--
+We will use build scans in this presentation to illustrate some topics
+--
+
+[%notitle]
+=== Build speed challenge
+image::build_speed_challenge.png[background, size=cover]

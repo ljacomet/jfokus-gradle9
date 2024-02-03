@@ -1,0 +1,24 @@
+= Slides
+
+== Asciidoctor / RevealJS
+
+https://docs.asciidoctor.org/reveal.js-converter/latest/
+
+== Build
+
+This build requires a Java 11 JDK with JavaFX included.
+
+You may also need `graphviz` installed: `$ brew install graphviz`
+
+Here are some useful build commands:
+
+```shell
+# Continuously build the HTML slides, browsable at build/docs/asciidocRevealJs/index.html
+./gradlew -t asciidoctorRevealJs
+
+# A shorter version
+./gradlew -t aRJ
+
+# Build the PDF slides
+./gradlew exportPdf
+```

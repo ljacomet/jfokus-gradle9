@@ -1,0 +1,10 @@
+= The road to Gradle 9
+
+Louis Jacomet <louis@gradle.com>
+
+Slides for my https://www.jfokus.se/talks/1709[JFokus 2024] presentation
+
+== Slides and recording
+
+HTML:: TODO
+PDF:: TODO
