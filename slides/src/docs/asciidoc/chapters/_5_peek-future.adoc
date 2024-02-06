@@ -1,0 +1,25 @@
+[background-color="#02303a"]
+== Peeking into the future
+image::gradle/bg-4.png[background, size=cover]
+
+&#x1F52E;
+
+=== Gradle 9 objectives
+image::gradle/bg-4.png[background, size=cover]
+
+[%step]
+* Stable isolated projects
+* Provider API 1.0
+** Feature complete for approved use cases
+* Provider API migration
+** And its associated tooling
+* Q3 or Q4 2024 release (tentative)
+
+=== Declarative Gradle
+image::gradle/bg-4.png[background, size=cover]
+
+[%step]
+* Better separate software definition from build logic
+* Using a restricted DSL for the software definition
+* Exposing domain specific concepts
+* Providing a better editing experience in the IDE

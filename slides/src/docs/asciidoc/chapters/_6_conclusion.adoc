@@ -1,0 +1,5 @@
+[background-color="#02303a"]
+== Thank you!
+image::gradle/bg-2.png[background, size=cover]
+
+&#x2753;

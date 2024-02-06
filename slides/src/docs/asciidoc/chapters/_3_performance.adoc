@@ -1,0 +1,171 @@
+[background-color="#02303a"]
+== Performance as a feature
+image::gradle/bg-7.png[background, size=cover]
+
+&#x1F680;
+
+[background-color="#02303a"]
+=== Faster compilation
+image::gradle/bg-7.png[background, size=cover]
+
+=== What is compilation avoidance?
+image::gradle/bg-7.png[background, size=cover]
+
+image::myapp-recompile-diff.png[]
+
+=== Compilation avoidance in practice
+image::gradle/bg-7.png[background, size=cover]
+
+* Since Gradle 3.4 (Feb 2017)
+* No recompilation between projects if ABI did not change
+* Smaller compilation classpath thanks to `api`/`implementation` separation
+
+=== Can it go faster?
+image::gradle/bg-7.png[background, size=cover]
+
+image::compiler-daemons.png[]
+
+[.small.right.top-margin]
+link:https://blog.gradle.org/our-approach-to-faster-compilation[blog/our-approach-to-faster-compilation]
+
+=== Compiler daemons
+image::gradle/bg-7.png[background, size=cover]
+
+* Reuse the compiler process across tasks and builds
+* Active by default since Gradle 8.4
+* Kotlin and Scala have their own support for this
+
+[background-color="#02303a"]
+=== Gradle Configuration cache
+image::gradle/bg-7.png[background, size=cover]
+
+[%notitle]
+=== CC what?
+image::gradle/bg-7.png[background, size=cover]
+
+[%step]
+* What is it?
+* What are the requirements?
+* Why does it matter?
+
+=== Gradle build anatomy
+image::gradle/bg-7.png[background, size=cover]
+
+image::gradle-build-anatomy.png[]
+
+[.small.right.top-margin]
+Bars not to scale
+
+=== Configuration phase goal
+image::gradle/bg-7.png[background, size=cover]
+
+* Apply plugins
+* Execute build logic
+* Compute task graph
+** Selecting and configuring _requested_ tasks
+** and their _dependencies_
+
+=== Caching build configuration
+image::gradle/bg-7.png[background, size=cover]
+
+image::config-cloud.png[]
+
+=== Requirements
+image::gradle/bg-7.png[background, size=cover]
+
+* No live JVM types
+** Classloaders, I/O streams, threads, etc.
+* No Gradle model types
+** Including dependency management types
+
+=== Example of invalid input
+image::gradle/bg-7.png[background, size=cover]
+
+```kotlin
+abstract class SomeTask : DefaultTask() {
+
+    @get:Input lateinit var sourceSet: SourceSet
+
+    @TaskAction
+    fun action() {
+        val classpathFiles = sourceSet.compileClasspath.files
+        // ...
+    }
+}
+```
+
+needs to become
+
+```kotlin
+abstract class SomeTask : DefaultTask() {
+
+    @get:InputFiles @get:Classpath
+    abstract val classpath: ConfigurableFileCollection
+
+    @TaskAction
+    fun action() {
+        val classpathFiles = classpath.files
+        // ...
+    }
+}
+```
+
+configured with
+```kotlin
+classpath.from(sourceSet.compileClasspath)
+```
+
+=== Why does it matter?
+image::gradle/bg-7.png[background, size=cover]
+
+[%step]
+* Configuration time goes down to almost zero
+* Valid configuration cache gives stronger guarantees for task isolation
+* Which allows Gradle tasks to run
+[%step]
+** sooner
+** in parallel
+** including inside a single project
+
+[background-color="#02303a"]
+=== Demo
+image::gradle/bg-7.png[background, size=cover]
+
+=== Limitations
+image::gradle/bg-7.png[background, size=cover]
+
+[%step]
+* What about the work of the build engineer?
+* What about dependency upgrades and other build focused engineering tasks?
+
+[background-color="#02303a"]
+=== Project isolation
+image::gradle/bg-7.png[background, size=cover]
+
+=== Did you say cache miss?
+image::gradle/bg-7.png[background, size=cover]
+
+[%step]
+* On a miss, the configuration phase needs to run
+* But, with enough guarantees, it could run
+[%step]
+** In parallel
+** Incrementally
+
+=== More constraints
+image::gradle/bg-7.png[background, size=cover]
+
+* No _mutable_ cross project access
+** Example: No `allprojects` or `subprojects` that _mutates_ project configuration
+
+=== Solving real use cases
+image::gradle/bg-7.png[background, size=cover]
+
+* Applying a plugin only on the root project
+
+=== Current status
+image::gradle/bg-7.png[background, size=cover]
+
+* Alpha experiment
+* Interesting for early adopters
+* Focuses on speeding up the IDE experience first

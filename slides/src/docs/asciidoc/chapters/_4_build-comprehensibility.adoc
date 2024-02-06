@@ -1,0 +1,165 @@
+[background-color="#02303a"]
+== Build comprehensibility
+image::gradle/bg-6.png[background, size=cover]
+
+&#x1F4A1;
+
+[background-color="#02303a"]
+=== Provider API
+image::gradle/bg-6.png[background, size=cover]
+
+=== What are the problems?
+image::gradle/bg-6.png[background, size=cover]
+
+[%step]
+* Challenges with evaluation ordering
+* `afterEvaluate` does not scale
+** How "after" do you need to be?
+* Tasks produce files
+** How do you make sure the consumer of that file `dependsOn` the producing task?
+
+=== Example
+image::gradle/bg-6.png[background, size=cover]
+
+```kotlin
+subprojects {
+    publishing {
+        publications {
+            create<MavenPublication>("mavenJava") {
+                from(components["java"])
+                afterEvaluate {
+                    artifactId = tasks.jar.get().archiveBaseName.get()
+                }
+            }
+        }
+    }
+}
+```
+
+=== Solutions
+image::gradle/bg-6.png[background, size=cover]
+
+image::laziness.png[]
+
+=== Enter the Provider API
+image::gradle/bg-6.png[background, size=cover]
+
+[%step]
+* Wire and derive values
+** Without caring about when it is set
+* Output properties used as input track task dependencies
+* Evaluation is done on demand
+** Task does not run -> No inputs are computed
+
+=== Adoption challenge
+image::gradle/bg-6.png[background, size=cover]
+
+[%step]
+* Existing Gradle API is large
+** Lots of "properties" to convert
+* Alternative (minor) -> Deprecation (minor) -> Removal (major)
+** Disruptive cycle for the community
+* In short, does not scale
+
+=== `buildDir` example
+image::gradle/bg-6.png[background, size=cover]
+
+```kotlin
+// Returns a java.io.File
+file("$buildDir/myOutput.txt")
+```
+to be replaced with
+```kotlin
+// Compatible with a number of Gradle lazy APIs that accept also java.io.File
+val output: Provider<RegularFile> = layout.buildDirectory.file("myOutput.txt")
+
+// If you really need the java.io.File for a non lazy API
+output.get().asFile
+
+// Or a path for a lazy String based API
+output.map { it.asFile.path }
+```
+
+=== Kotlin DSL assignment
+image::gradle/bg-6.png[background, size=cover]
+
+```kotlin
+interface Extension {
+    val description: Property<String>
+}
+
+// register "extension" with type Extension
+extension {
+    // Using the set() method call
+    description.set("Hello Property")
+    // Using lazy property assignment
+    description = "Hello Property"
+}
+```
+
+=== Provider API migration
+image::gradle/bg-6.png[background, size=cover]
+
+[%step]
+* Do a large scale migration of Gradle APIs in Gradle 9.0
+* Supported by automatic conversion for plugins
+* Requires polishing the Provider API itself
+* Does not resolve the adoption by community plugins
+
+[background-color="#02303a"]
+=== Modeling
+image::gradle/bg-6.png[background, size=cover]
+
+=== Raising the abstraction
+image::gradle/bg-6.png[background, size=cover]
+
+[%step]
+* Gradle has an amazing execution model
+* But leveraging it requires expertise
+* Common use cases are not always easy to express
+
+=== Adding a test suite
+image::gradle/bg-6.png[background, size=cover]
+
+```kotlin
+sourceSets {
+    create("intTest") {
+        compileClasspath += sourceSets.main.get().output
+        runtimeClasspath += sourceSets.main.get().output
+    }
+}
+
+val intTestImplementation by configurations.getting {
+    extendsFrom(configurations.implementation.get())
+}
+
+configurations["intTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
+
+dependencies {
+    intTestImplementation("junit:junit:4.13")
+}
+```
+
+=== Modern test suite
+image::gradle/bg-6.png[background, size=cover]
+
+```kotlin
+testing {
+    suites {
+        val integrationTest by registering(JvmTestSuite::class) {
+            dependencies {
+                implementation(project())
+            }
+        }
+    }
+}
+```
+
+=== Going further with dependency declarations
+image::gradle/bg-6.png[background, size=cover]
+
+* Introduce a `dependencies` block
+[%step]
+** That can be reused in different contexts
+** Where configuration names are the same _but contextual_
+** Matches patterns from other ecosystems like Android or Kotlin
