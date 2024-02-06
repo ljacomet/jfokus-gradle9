@@ -5,14 +5,19 @@ image::gradle/bg-6.png[background, size=cover]
 &#x1F4A1;
 
 [background-color="#02303a"]
-=== Provider API
+=== Laziness as a solution
 image::gradle/bg-6.png[background, size=cover]
 
-=== What are the problems?
+=== The Gradle task graph
+image::gradle/bg-6.png[background, size=cover]
+
+image::task-dag-examples.png[]
+
+=== Challenges
 image::gradle/bg-6.png[background, size=cover]
 
 [%step]
-* Challenges with evaluation ordering
+* Evaluation ordering
 * `afterEvaluate` does not scale
 ** How "after" do you need to be?
 * Tasks produce files
@@ -28,7 +33,7 @@ subprojects {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
                 afterEvaluate {
-                    artifactId = tasks.jar.get().archiveBaseName.get()
+                    artifactId = tasks.jar.archiveBaseName
                 }
             }
         }
@@ -36,7 +41,7 @@ subprojects {
 }
 ```
 
-=== Solutions
+=== Solution
 image::gradle/bg-6.png[background, size=cover]
 
 image::laziness.png[]
@@ -51,6 +56,40 @@ image::gradle/bg-6.png[background, size=cover]
 * Evaluation is done on demand
 ** Task does not run -> No inputs are computed
 
+[%notitle]
+=== Task wiring example
+image::gradle/bg-6.png[background, size=cover]
+
+```kotlin
+val producer = tasks.register<Producer>("producer")
+val consumer = tasks.register<Consumer>("consumer")
+
+consumer {
+    // Connect the producer task output to the consumer task input
+    // Don't need to add a task dependency to the consumer task.
+    // This is automatically added
+    inputFile = producer.flatMap { it.outputFile }
+}
+
+producer {
+    // Set values for the producer lazily
+    // Don't need to update the consumer.inputFile property.
+    // This is automatically updated as producer.outputFile changes
+    outputFile = layout.buildDirectory.file("file.txt")
+}
+
+// Change the build directory.
+// Don't need to update producer.outputFile and consumer.inputFile.
+// These are automatically updated as the build directory changes
+layout.buildDirectory = layout.projectDirectory.dir("output")
+```
+
+[%notitle]
+=== Provider API javadoc
+image::gradle/bg-6.png[background, size=cover]
+
+image::provider-api.png[]
+
 === Adoption challenge
 image::gradle/bg-6.png[background, size=cover]
 
@@ -58,7 +97,9 @@ image::gradle/bg-6.png[background, size=cover]
 * Existing Gradle API is large
 ** Lots of "properties" to convert
 * Alternative (minor) -> Deprecation (minor) -> Removal (major)
-** Disruptive cycle for the community
+** Disruptive cycle
+** Long cycle
+* Bridging plain properties and Provider API is awkward
 * In short, does not scale
 
 === `buildDir` example
@@ -163,3 +204,28 @@ image::gradle/bg-6.png[background, size=cover]
 ** That can be reused in different contexts
 ** Where configuration names are the same _but contextual_
 ** Matches patterns from other ecosystems like Android or Kotlin
+
+=== Kotlin Multi platform example
+image::gradle/bg-6.png[background, size=cover]
+
+```kotlin
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                // kotlinx.coroutines will be available in all source sets
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+            }
+        }
+        val androidMain by getting {
+            dependencies {}
+        }
+        val iosMain by getting {
+            dependencies {
+                // SQLDelight will be available only in the iOS source set, but not in Android or common
+                implementation("com.squareup.sqldelight:native-driver:2.0.0")
+            }
+        }
+    }
+}
+```

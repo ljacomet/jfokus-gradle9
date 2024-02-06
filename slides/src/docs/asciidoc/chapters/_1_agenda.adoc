@@ -30,12 +30,12 @@ image::gradle/bg-10.png[background, size=cover]
 image::gradle/bg-10.png[background, size=cover]
 
 * Performance as a feature
-** Compiler daemons
+** Faster compilation
 ** Configuration cache
 ** Isolated projects
 * Build comprehensibility
-** Solving evaluation ordering with laziness
-** Reusable DSL elements
+** Laziness as a solution
+** Modeling
 * A peek into the future
 
 

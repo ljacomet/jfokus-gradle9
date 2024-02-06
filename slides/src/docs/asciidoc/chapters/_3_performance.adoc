@@ -31,22 +31,28 @@ link:https://blog.gradle.org/our-approach-to-faster-compilation[blog/our-approac
 === Compiler daemons
 image::gradle/bg-7.png[background, size=cover]
 
-* Reuse the compiler process across tasks and builds
+* Reuse the Java compiler process across tasks and builds
 * Active by default since Gradle 8.4
 * Kotlin and Scala have their own support for this
 
+=== What's up with 8.0 vs 8.1?
+image::gradle/bg-7.png[background, size=cover]
+
+image::compiler-daemons.png[]
+
+[.small.right.top-margin]
+link:https://blog.gradle.org/our-approach-to-faster-compilation[blog/our-approach-to-faster-compilation]
+
 [background-color="#02303a"]
-=== Gradle Configuration cache
+=== Gradle Configuration Cache
 image::gradle/bg-7.png[background, size=cover]
 
-[%notitle]
-=== CC what?
-image::gradle/bg-7.png[background, size=cover]
-
-[%step]
+[.notes]
+--
 * What is it?
 * What are the requirements?
 * Why does it matter?
+--
 
 === Gradle build anatomy
 image::gradle/bg-7.png[background, size=cover]
@@ -56,7 +62,7 @@ image::gradle-build-anatomy.png[]
 [.small.right.top-margin]
 Bars not to scale
 
-=== Configuration phase goal
+=== Configuration phase
 image::gradle/bg-7.png[background, size=cover]
 
 * Apply plugins
@@ -69,6 +75,14 @@ image::gradle/bg-7.png[background, size=cover]
 image::gradle/bg-7.png[background, size=cover]
 
 image::config-cloud.png[]
+
+=== What is cached?
+
+[%step]
+* Task graph
+* Task inputs
+* All the rest is discarded
+** No `project` state anymore
 
 === Requirements
 image::gradle/bg-7.png[background, size=cover]
@@ -155,13 +169,13 @@ image::gradle/bg-7.png[background, size=cover]
 === More constraints
 image::gradle/bg-7.png[background, size=cover]
 
-* No _mutable_ cross project access
+* No _mutable_ cross project access during configuration
 ** Example: No `allprojects` or `subprojects` that _mutates_ project configuration
 
-=== Solving real use cases
-image::gradle/bg-7.png[background, size=cover]
-
+[.notes]
+--
 * Applying a plugin only on the root project
+--
 
 === Current status
 image::gradle/bg-7.png[background, size=cover]

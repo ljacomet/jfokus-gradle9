@@ -10,7 +10,7 @@ image::gradle/bg-4.png[background, size=cover]
 [%step]
 * Stable isolated projects
 * Provider API 1.0
-** Feature complete for approved use cases
+** Feature complete for supported use cases
 * Provider API migration
 ** And its associated tooling
 * Q3 or Q4 2024 release (tentative)

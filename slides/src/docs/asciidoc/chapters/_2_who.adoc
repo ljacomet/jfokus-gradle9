@@ -32,6 +32,7 @@ speaker {
 }
 ----
 
+[%notitle]
 === Gradle
 image::gradle/bg-1.png[background, size=cover]
 
@@ -60,7 +61,7 @@ image::logo-gradle-build-tool.svg[role=product-logo-as-title]
 
 Software build tool under https://github.com/gradle/gradle/blob/master/LICENSE[Apache] license.
 
-Top 20 in popular open source projects according to https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/[TechCrunch] with nearly 30 millions monthly downloads.
+Top 20 in popular open source projects according to https://techcrunch.com/2017/04/07/tracking-the-explosive-growth-of-open-source-software/[TechCrunch] with over 40 millions monthly downloads.
 
 
 [%notitle]
@@ -127,6 +128,3 @@ image:build-scan-link.svg[link=https://scans.gradle.com/s/rcqiowuogd2xu]
 We will use build scans in this presentation to illustrate some topics
 --
 
-[%notitle]
-=== Build speed challenge
-image::build_speed_challenge.png[background, size=cover]
