@@ -17,6 +17,9 @@ image::gradle/bg-4.png[background, size=cover]
 * Many bug fixes and improvements
 * Q3 or Q4 2024 release (tentative)
 
+[.small.right.top-margin]
+link:https://github.com/orgs/gradle/projects/31/views/1[gradle-roadmap]
+
 === Declarative Gradle
 image::gradle/bg-4.png[background, size=cover]
 
@@ -25,6 +28,9 @@ image::gradle/bg-4.png[background, size=cover]
 * Using a restricted DSL for the software definition
 * Exposing domain specific concepts
 * Providing a better editing experience in the IDE
+
+[.small.right.top-margin]
+link:https://blog.gradle.org/declarative-gradle[blog/declarative-gradle]
 
 === Peek at current prototype
 

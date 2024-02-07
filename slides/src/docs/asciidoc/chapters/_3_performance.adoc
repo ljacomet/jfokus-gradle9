@@ -93,7 +93,7 @@ image::gradle/bg-7.png[background, size=cover]
 ** Including dependency management types
 
 [.small.right.top-margin]
-link:https://docs.gradle.org/current/userguide/configuration_cache.html#config_cache:requirements[docsg/configuration-cache-requirements]
+link:https://docs.gradle.org/current/userguide/configuration_cache.html#config_cache:requirements[docs/configuration-cache-requirements]
 
 === Example of invalid input
 image::gradle/bg-7.png[background, size=cover]
