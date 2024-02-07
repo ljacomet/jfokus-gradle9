@@ -6,5 +6,5 @@ Slides for my https://www.jfokus.se/talks/1709[JFokus 2024] presentation
 
 == Slides and recording
 
-HTML:: TODO
-PDF:: TODO
+HTML:: link:https://ljacomet.github.io/jfokus-gradle9/[ljacomet.github.io/jfokus-gradle9]
+PDF:: link:https://github.com/ljacomet/jfokus-gradle9/releases/download/SLIDES/20240206_JFokus24_The_road_to_Gradle_9.pdf[20240206_JFokus24_The_road_to_Gradle_9.pdf]
