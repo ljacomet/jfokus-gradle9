@@ -8,11 +8,13 @@ image::gradle/bg-4.png[background, size=cover]
 image::gradle/bg-4.png[background, size=cover]
 
 [%step]
+* Configuration cache active by default
 * Stable isolated projects
 * Provider API 1.0
 ** Feature complete for supported use cases
 * Provider API migration
 ** And its associated tooling
+* Many bug fixes and improvements
 * Q3 or Q4 2024 release (tentative)
 
 === Declarative Gradle
@@ -23,3 +25,33 @@ image::gradle/bg-4.png[background, size=cover]
 * Using a restricted DSL for the software definition
 * Exposing domain specific concepts
 * Providing a better editing experience in the IDE
+
+=== Peek at current prototype
+
+```kotlin
+kmpLibrary {
+    dependencies {
+        api(libs.ktor.client.core)
+    }
+
+    targets {
+        jvm {
+            jvmTarget = JvmTarget.JVM_14
+
+            dependencies {
+                api(libs.commons.lang)
+            }
+        }
+        js {
+            environment = JsEnvironment.NODE
+
+            dependencies {
+                implementation(libs.sqldelight.runtime)
+            }
+        }
+    }
+}
+```
+
+Disclaimer::
+Will certainly change, most likely a lot
