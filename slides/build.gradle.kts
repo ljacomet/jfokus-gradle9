@@ -145,7 +145,7 @@ tasks {
 }
 
 gitPublish {
-  repoUri.set("git@github.com:ljacomet/jfokus23_dependency_management.git")
+  repoUri.set("git@github.com:ljacomet/jfokus-gradle9.git")
   branch.set("gh-pages")
   contents {
     from(tasks.asciidoctorRevealJs)
